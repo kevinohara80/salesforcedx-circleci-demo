@@ -8,10 +8,8 @@ dependencies:
   override:
     - wget -qO- $DX_CLI_URL | tar xJf -
     - ./heroku/install
-    - echo $CONSUMER_KEY
-    - echo $SFDC_USER
-    - echo $SERVER_KEY
-    # - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
+    - mkdir tmp && echo $SERVER_KEY >> tmp/server.key
+    - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile tmp/server.key --username $SFDC_USER --setdefaultdevhubusername
 
 test:
   override:
