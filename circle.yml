@@ -2,12 +2,21 @@ machine:
   timezone: America/New_York
   environment:
     DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.6.22-f9533ba-linux-amd64.tar.xz
+    SFDX_DISABLE_ENCRYPTION: true
 
 dependencies:
   override:
     - wget -qO- $DX_CLI_URL | tar xJf -
     - ./heroku/install
+    - echo $CONSUMER_KEY
+    - echo $SFDC_USER
+    # - sfdx force:auth:jwt:grant --clientid $CONSUMERKEY --jwtkeyfile assets/server.key --username $USERNAME --setdefaultdevhubusername
 
 test:
   override:
-    - sfdx --help
+    - sfdx force --help
+    # - sfdx force:org:create -s -f config/workspace-scratch-def.json -a ciorg
+    # - sfdx force:source:push -u ciorg
+    # - sfdx force:apex:test:run -c -r human
+    # - sleep 4m
+    # - sfdx force:org:delete -u ciorg -p
