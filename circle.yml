@@ -1,0 +1,13 @@
+machine:
+  timezone: America/New_York
+  environment:
+    DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.6.22-f9533ba-linux-amd64.tar.xz
+
+dependencies:
+  override:
+    - wget -qO- $DX_CLI_URL | tar xJf -
+    - ./heroku/install
+
+test:
+  override:
+    - sfdx --help
