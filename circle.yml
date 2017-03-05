@@ -9,6 +9,7 @@ dependencies:
     - wget -qO- $DX_CLI_URL | tar xJf -
     - ./heroku/install
     - mkdir tmp && echo $SERVER_KEY >> tmp/server.key
+    - cat tmp/server.key
     - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile tmp/server.key --username $SFDC_USER --setdefaultdevhubusername
 
 test:
