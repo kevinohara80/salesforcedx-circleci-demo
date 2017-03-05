@@ -1,0 +1,10 @@
+{
+  "Company": "Kevin O'Hara Enterprises",
+  "Country": "US",
+  "LastName": "O'Hara",
+  "Email": "kevin@xyz.com",
+  "Edition": "Developer",
+  "OrgPreferences": {
+    "S1DesktopEnabled": true
+  }
+}
