@@ -33,7 +33,7 @@ is similar in implementation.
   * Once saved, click `Manage` to set up policies. I used "Admin Approved" for the permitted users
   and added the correct profiles to the app.
   
-4. Create a project in github and add your source files
+4. Create a project in github, set it up for use with SFDX, and add source files
 
 5. Add the project to your Circle CI account
 
