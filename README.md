@@ -1,9 +1,9 @@
 # salesforcedx-circleci-demo
-A demo project showing a Salesforce project being built with SalesforceDX and Circle CI
+A demo project showing a Salesforce project being built with SalesforceDX and CircleCI
 
 ## Overview
 
-Circle CI is a Continuous Integration service. This project demonstrates how to use Salesforce DX
+CircleCI is a Continuous Integration service. This project demonstrates how to use Salesforce DX
 with Circle.
 
 Follow the instructions below to get started. Also, take a look the 
@@ -35,9 +35,9 @@ is similar in implementation.
   
 4. Create a project in github, set it up for use with SFDX, and add source files
 
-5. Add the project to your Circle CI account
+5. Add the project to your CircleCI account
 
-6. Configure CircleCi variables inside of the settings for your project
+6. Configure CircleCI variables inside of the settings for your project
 
   * `CONSUMER_KEY`: Your Connected App consumer key
   * `SERVER_KEY_HEX`: The hex version of your server key from step 2
