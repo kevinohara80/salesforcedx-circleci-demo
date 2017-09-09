@@ -34,6 +34,9 @@ See `keys/makeServerKey.sh` as an example you can build upon.
   * Select the required OAuth scopes
   * Once saved, click `Manage` to set up policies. I used "Admin Approved" for the permitted users
   and added the correct profiles to the app.
+  * Verify JWT works through the following command:
+
+  >sfdx force:auth:jwt:grant --clientid [[consumer-key]] --jwtkeyfile path/to/server.key --username [[username]]
   
 4. Create a project in github, set it up for use with SFDX, and add source files
 
