@@ -14,6 +14,8 @@ is similar in implementation.
 
 1. Generate a an [SSL server key and certificate](https://devcenter.heroku.com/articles/ssl-certificate-self)
 
+See `keys/makeServerKey.sh` as an example you can build upon.
+
 2. Convert it to hex for storing in Circle's env variables. 
 
   > Circle does a nice job of allowing you to set environment variables inside the UI in a 

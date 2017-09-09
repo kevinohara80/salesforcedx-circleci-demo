@@ -9,9 +9,9 @@ dependencies:
     - wget -qO- $DX_CLI_URL | tar xJf -
     - ./heroku/install
     - mkdir tmp
-    - echo $SERVER_KEY_HEX | xxd -r -ps >> tmp/server.key
-    - openssl rsa -in tmp/server.key -check -noout
-    - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile tmp/server.key --username $SFDC_USER --setdefaultdevhubusername
+    - echo $SERVER_KEY_HEX | xxd -r -ps >> keys/server.key
+    - openssl rsa -in keys/server.key -check -noout
+    - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile keys/server.key --username $SFDC_USER --setdefaultdevhubusername
 
 test:
   override:
