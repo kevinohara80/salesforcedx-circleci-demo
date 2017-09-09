@@ -14,6 +14,8 @@ is similar in implementation.
 
 1. Generate a an [SSL server key and certificate](https://devcenter.heroku.com/articles/ssl-certificate-self)
 
+See `keys/makeServerKey.sh` as an example you can build upon.
+
 2. Convert it to hex for storing in Circle's env variables. 
 
   > Circle does a nice job of allowing you to set environment variables inside the UI in a 
@@ -30,8 +32,13 @@ is similar in implementation.
   * Set the OAuth callback to `http://localhost:1717/OauthRedirect`
   * Check `Use Digital Signatures` and add your certificate (likely `server.crt`) from step (1)
   * Select the required OAuth scopes
+     * Make sure that `refresh` is enabled - otherwise you'll get this error: `user hasn't approved this consumer`
+
   * Once saved, click `Manage` to set up policies. I used "Admin Approved" for the permitted users
   and added the correct profiles to the app.
+  * Verify JWT works through the following command:
+
+  >sfdx force:auth:jwt:grant --clientid [[consumer-key]] --jwtkeyfile path/to/server.key --username [[username]]
   
 4. Create a project in github, set it up for use with SFDX, and add source files
 

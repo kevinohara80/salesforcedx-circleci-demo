@@ -1,22 +1,32 @@
+
+general:
+# Uncomment the following to specify only a specific branch 
+#   branches:
+#     only:
+#       - dev # specific branch
+#       - /dev-.*/ # or regexes
+
 machine:
   timezone: America/New_York
   environment:
-    DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.6.22-f9533ba-linux-amd64.tar.xz
+    # from https://developer.salesforce.com/docs/atlas.en-us.sfdx_setup.meta/sfdx_setup/sfdx_setup_install_cli_standalone.htm
+    # and https://developer.salesforce.com/media/salesforce-cli/manifest.json
+    DX_CLI_URL: https://developer.salesforce.com/media/salesforce-cli/sfdx-v5.7.6-d42cf65-linux-amd64.tar.xz
     SFDX_DISABLE_ENCRYPTION: true
 
 dependencies:
   override:
     - wget -qO- $DX_CLI_URL | tar xJf -
-    - ./heroku/install
+    - ./sfdx/install
     - mkdir tmp
-    - echo $SERVER_KEY_HEX | xxd -r -ps >> tmp/server.key
-    - openssl rsa -in tmp/server.key -check -noout
-    - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile tmp/server.key --username $SFDC_USER --setdefaultdevhubusername
+    - echo $SERVER_KEY_HEX | xxd -r -ps >> keys/server.key
+    - openssl rsa -in keys/server.key -check -noout
+    - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile keys/server.key --username $SFDC_USER --setdefaultdevhubusername
 
 test:
   override:
     - sfdx force --help
-    - sfdx force:org:create -s -f config/workspace-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
+    - sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
     - sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
     - mkdir -p $CIRCLE_TEST_REPORTS/junit
     - sfdx force:apex:test:run -c -d $CIRCLE_TEST_REPORTS/junit -r junit
