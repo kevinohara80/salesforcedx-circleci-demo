@@ -1,3 +1,11 @@
+
+general:
+# Uncomment the following to specify only a specific branch 
+#   branches:
+#     only:
+#       - dev # specific branch
+#       - /dev-.*/ # or regexes
+
 machine:
   timezone: America/New_York
   environment:
