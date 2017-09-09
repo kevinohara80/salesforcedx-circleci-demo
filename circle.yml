@@ -16,7 +16,7 @@ dependencies:
 test:
   override:
     - sfdx force --help
-    - sfdx force:org:create -s -f config/workspace-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
+    - sfdx force:org:create -s -f config/project-scratch-def.json -a circle_build_$CIRCLE_BUILD_NUM
     - sfdx force:source:push -u circle_build_$CIRCLE_BUILD_NUM
     - mkdir -p $CIRCLE_TEST_REPORTS/junit
     - sfdx force:apex:test:run -c -d $CIRCLE_TEST_REPORTS/junit -r junit
