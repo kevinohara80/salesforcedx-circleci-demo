@@ -32,6 +32,8 @@ See `keys/makeServerKey.sh` as an example you can build upon.
   * Set the OAuth callback to `http://localhost:1717/OauthRedirect`
   * Check `Use Digital Signatures` and add your certificate (likely `server.crt`) from step (1)
   * Select the required OAuth scopes
+     * Make sure that `refresh` is enabled - otherwise you'll get this error: `user hasn't approved this consumer`
+
   * Once saved, click `Manage` to set up policies. I used "Admin Approved" for the permitted users
   and added the correct profiles to the app.
   * Verify JWT works through the following command:
