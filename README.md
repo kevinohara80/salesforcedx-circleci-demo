@@ -46,8 +46,47 @@ See `keys/makeServerKey.sh` as an example you can build upon.
 
 6. Configure CircleCI variables inside of the settings for your project
 
-  * `CONSUMER_KEY`: Your Connected App consumer key
-  * `SERVER_KEY_HEX`: The hex version of your server key from step 2
-  * `SFDC_USER`: The username for your Salesforce user
+  * `HUB_CONSUMER_KEY`: Your Connected App consumer key
+  * `HUB_SERVER_KEY_HEX`: The hex version of your server key from step 2
+  * `HUB_SFDC_USER`: The username for your Salesforce user
   
 7. Add the example `circle.yml` and push some commits to your repo to start building
+
+## Supporting Sandbox Deployments
+
+Please note that Salesforce DX Source Synchronization (e.g `sfdx force:source:push`) only works with Scratch Orgs.
+
+Sandboxes still have a place within the Salesforce DX ecosystem.  Sandboxes are much less ephemeral (temporary) and so lend themselves better for:
+
+* Working with multiple people (such as QA)
+* Larger, more complete data that should be used for testing.
+
+Salesforce DX include a MetaData API component that handles this transition seamlessly - without the need for additional toolkits (such as [Ant](https://developer.salesforce.com/docs/atlas.en-us.daas.meta/daas/meta_development.htm)).
+
+1. (Optional) Although the same key / hex can be used from the Hub, we recommend creating a new key for each sandbox for security purposes.
+
+  * Follow the steps 1-2 from above, and rename/secure the keys.
+
+2. Create a Connected app on the Target Sandbox to use during deployment.
+
+  * Check `Enable OAuth Settings`
+  * Set the OAuth callback to `http://localhost:1717/OauthRedirect`
+  * Check `Use Digital Signatures` and add your certificate (likely `server.crt`) from previous step.
+  * Select the required OAuth scopes
+     * Make sure that `refresh` is enabled - otherwise you'll get this error: `user hasn't approved this consumer`
+
+  * Once saved, click `Manage` to set up policies. I used "Admin Approved" for the permitted users
+  and added the correct profiles to the app.
+     * As always, we recommend setting up a separate Profile and User specific for deployments, <br /> but it is not necessary for it to work.
+  * Verify JWT works through the following command:
+
+  >sfdx force:auth:jwt:grant --clientid [[consumer-key]] --jwtkeyfile path/to/server.key --username [[username]]
+  
+2. Configure CircleCI variables inside of the settings for your project for DEPLOY_*
+
+  * `DEPLOY_CONSUMER_KEY`: Your Sandbox Connected App consumer key
+  * `DEPLOY_SERVER_KEY_HEX`: The hex version of your server key (matching the Sandbox Connected App)
+  * `DEPLOY_SFDC_USER`: The username for your Sandbox Salesforce user
+
+3. Uncomment (remove the leading #) from the `deploy` section of circle.yml
+

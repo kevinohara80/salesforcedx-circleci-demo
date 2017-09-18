@@ -19,9 +19,16 @@ dependencies:
     - wget -qO- $DX_CLI_URL | tar xJf -
     - ./sfdx/install
     - mkdir tmp
-    - echo $SERVER_KEY_HEX | xxd -r -ps >> keys/server.key
-    - openssl rsa -in keys/server.key -check -noout
-    - sfdx force:auth:jwt:grant --clientid $CONSUMER_KEY --jwtkeyfile keys/server.key --username $SFDC_USER --setdefaultdevhubusername
+    - echo 'make hub key'
+    - echo $HUB_SERVER_KEY_HEX | xxd -r -ps >> keys/hub.key
+    - openssl rsa -in keys/hub.key -check -noout
+    - sfdx force:auth:jwt:grant --clientid $HUB_CONSUMER_KEY --jwtkeyfile keys/hub.key --username $HUB_SFDC_USER --setdefaultdevhubusername -a hub
+    ### Uncomment the following if performing deployments
+    #- echo 'make deploy key'
+    #- echo $DEPLOY_SERVER_KEY_HEX | xxd -r -ps >> keys/deploy.key
+    #- openssl rsa -in keys/deploy.key -check -noout
+    #- sfdx force:auth:jwt:grant --clientid $DEPLOY_CONSUMER_KEY --jwtkeyfile keys/deploy.key --username $DEPLOY_SFDC_USER -a deploy
+    
 
 test:
   override:
@@ -32,3 +39,10 @@ test:
     - sfdx force:apex:test:run -c -d $CIRCLE_TEST_REPORTS/junit -r junit
     - sleep 1m
     - sfdx force:org:delete -u circle_build_$CIRCLE_BUILD_NUM -p
+
+### Uncomment the following if performing deployments
+#deployment:
+#  override:
+#    - sfdx force:source:convert -r force-app -d testDeploy
+#    - . cleanupDeploy.sh
+#    - sfdx force:mdapi:deploy -d testDeploy/ -u deploy -w 2
