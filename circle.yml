@@ -45,6 +45,4 @@ test:
 #  override:
 #    - sfdx force:source:convert -r force-app -d testDeploy
 #    - . cleanupDeploy.sh
-#    - ls testDeploy
-#    - cat testDeploy/profiles/Admin.profile
 #    - sfdx force:mdapi:deploy -d testDeploy/ -u deploy -w 2
